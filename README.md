@@ -24,38 +24,54 @@ The following table outlines the users I created along with their roles and init
 
 | First Name | Last Name | User ID  | Job Role             | Starting Password  |
 |------------|-----------|----------|----------------------|--------------------|
-| David      | Johnson   | djohnson | System Administrator | P@ssword123!       |
-| Aisha      | Khan      | akhan    | DevOps Engineer      | P@ssword123!       |
-| Noah       | Smith     | nsmith   | Security Analyst     | P@ssword123!       |
-| Fatima     | Ahmed     | fahmed   | Data Scientist       | P@ssword123!       |
-| Lucas      | Brown     | lbrown   | Network Engineer     | P@ssword123!       |
-| Zoe        | Taylor    | ztaylor  | Software Developer   | P@ssword123!       |
-| Ethan      | Clarke    | eclarke  | Finance Manager      | P@ssword123!       |
-| Emily      | Wright    | ewright  | HR Manager           | P@ssword123!       |
-| Omar       | Ali       | oali     | Sales Representative | P@ssword123!       |
-| Sofia      | Lopez     | slopez   | Marketing Specialist | P@ssword123!       |
+| David      | Johnson   | djohnson | System Administrator | Welcome@2025       |
+| Aisha      | Khan      | akhan    | DevOps Engineer      | Welcome@2025       |
+| Noah       | Smith     | nsmith   | Security Analyst     | Welcome@2025       |
+| Fatima     | Ahmed     | fahmed   | Data Scientist       | Welcome@2025       |
+| Lucas      | Brown     | lbrown   | Network Engineer     | Welcome@2025       |
+| Zoe        | Taylor    | ztaylor  | Software Developer   | Welcome@2025       |
+| Ethan      | Clarke    | eclarke  | Finance Manager      | Welcome@2025       |
+| Emily      | Wright    | ewright  | HR Manager           | Welcome@2025       |
+| Omar       | Ali       | oali     | Sales Representative | Welcome@2025       |
+| Sofia      | Lopez     | slopez   | Marketing Specialist | Welcome@2025       |
+
+Before proceeding, I verified my working directory using:
+
+```bash
+pwd
+```
 
 Each user was created using the `useradd` command, ensuring a structured and automated approach to account creation.
 
 ```bash
-sudo useradd -m -s /bin/bash djohnson
+sudo useradd djohnson
 ```
 
 Setting the initial password and enforcing security policies were crucial steps. I utilized `passwd` to define passwords and enforce resets on first login.
 
 ```bash
-echo "P@ssword123!" | sudo passwd --stdin djohnson
+echo "Welcome@2025" | sudo passwd --stdin djohnson
 sudo chage -d 0 djohnson
 ```
 
+To verify that the users were successfully created, I ran:
+
+```bash
+sudo cat /etc/passwd | cut -d: -f1
+```
 ---
 
 ### **Organizing Users into Groups**
-With users in place, I structured them into relevant groups based on their job roles. This helps streamline permission management and access control.
+With users in place, I organized them into relevant groups based on their job roles. This helps streamline permission management and access control.
 
 ```bash
 sudo groupadd devops
 sudo usermod -aG devops akhan
+```
+To verify that the group was added, I checked:
+
+```bash
+cat /etc/group
 ```
 
 For security and compliance, I assigned administrative privileges only to essential personnel, using the `wheel` group for sudo access.
@@ -64,10 +80,15 @@ For security and compliance, I assigned administrative privileges only to essent
 sudo usermod -aG wheel djohnson
 ```
 
+To check group memberships, I ran:
+```bash
+sudo cat /etc/group
+```
+
 ---
 
 ### **Configuring Permissions and Security Policies**
-A key learning in this project was the importance of the principle of least privilege. I restricted file and directory access by setting appropriate ownership and permissions.
+I restricted file and directory access by setting appropriate ownership and permissions based on principle of least privilege.
 
 ```bash
 sudo chown root:devops /opt/devops-tools
@@ -88,6 +109,22 @@ Restarting the SSH service ensured that changes took effect.
 sudo systemctl restart sshd
 ```
 
+
+### **Logging in as a New User**
+
+To verify access control, I attempted to log in as `djohnson` and perform basic actions:
+
+```bash
+su djohnson
+pwd
+touch myFile.txt
+```
+
+This action failed because djohnson did not have sudo privileges. To check system logs for authentication attempts, I switched to a privileged user and ran:
+
+```bash
+sudo cat /var/log/secure
+```
 ---
 
 ### **Lessons and Reflections**
