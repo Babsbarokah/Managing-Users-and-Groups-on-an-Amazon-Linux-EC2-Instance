@@ -51,7 +51,7 @@ I then entered the user data in the format above and saved the file as users.csv
 
 With the CSV file ready, I created users based on the information provided. Here is an example for creating one user:
 
-### ***Manual User Creation***
+### *** Manual User Creation ***
 The first user was created manually using the `useradd` command, ensuring a structured and automated approach to account creation.
 
 ```bash
@@ -70,6 +70,8 @@ To verify that the users were successfully created, I ran:
 ```bash
 sudo cat /etc/passwd | cut -d: -f1
 ```
+
+<img width="1440" alt="Screenshot 2025-03-27 at 01 03 14" src="https://github.com/user-attachments/assets/e41fdb12-094c-4e9e-a6c3-54a5fe2d3d4d" />
 
 ---
 
@@ -107,6 +109,7 @@ do
 done < users.csv
 ```
 
+--- 
 In this script, the users are automatically assigned to groups matching their job role, such as `admin_group`, `devops`, `security`, etc.
 
 To verify that the group was added, I checked:
@@ -190,6 +193,12 @@ sudo cat /var/log/secure
 
 Initially, automating user creation and role assignment presented some formatting errors in the CSV file, leading to troubleshooting and refinements in the script logic. Another challenge was enforcing security policies consistently across different users and roles, but testing with different accounts helped validate the setup.
 
+
+<img width="1298" alt="Screenshot 2025-03-27 at 01 11 23" src="https://github.com/user-attachments/assets/8ca0b1c5-dc44-4b35-bdeb-18c52df5278c" />
+
+---
+
+<img width="1429" alt="Screenshot 2025-03-27 at 02 52 15" src="https://github.com/user-attachments/assets/340b6428-a4bc-4410-a287-6ff43ba77e6f" />
 
 
 ### **Lessons and Reflections**
